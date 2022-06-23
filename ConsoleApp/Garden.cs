@@ -21,10 +21,12 @@ namespace ConsoleApp
 
         public bool Plant(string name)
         {
-            if(string.IsNullOrWhiteSpace(name))
-                throw new ArgumentNullException("name");
+            if(name == null)
+                throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Roślina musi posiadać nazwę!", nameof(name));
             if (_items.Contains(name))
-                throw new ArgumentException("Roślina już istnieje w ogrodzie");
+                throw new ArgumentException("Roślina już istnieje w ogrodzie", nameof(name));
 
             if (_items.Count() >= Size)
                 return false;

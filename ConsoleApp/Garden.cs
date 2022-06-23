@@ -9,7 +9,7 @@ namespace ConsoleApp
     public class Garden
     {
         public int Size { get; }
-        public ICollection<string> _items { get; }
+        private ICollection<string> _items { get; }
 
 
         public Garden(int size)
@@ -35,7 +35,7 @@ namespace ConsoleApp
             return true;
         }
 
-        public IEnumerable<string> GetPlants()
+        public ICollection<string> GetPlants()
         {
             return _items.ToList();
         }

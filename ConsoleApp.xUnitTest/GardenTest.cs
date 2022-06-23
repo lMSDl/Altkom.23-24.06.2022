@@ -8,12 +8,14 @@ namespace ConsoleApp.xUnitTest
 {
     public class GardenTest
     {
-        [Fact]
-        public void Garden_AnySize_HasSetSize()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(-1)]
+        [InlineData(int.MaxValue)]
+        [InlineData(int.MinValue)]
+        public void Garden_AnySize_HasSetSize(int size)
         {
-            // Arrage
-            var size = 1;
-
             // Act
             var garden = new Garden(size);
 
@@ -32,57 +34,76 @@ namespace ConsoleApp.xUnitTest
             Assert.NotNull(list);
         }
 
-        [Fact]
-        //public void Plant_PassValidName_RetursTrue()
-        public void Plant_ValidName_True()
+        [Theory]
+        [InlineData(0, false)]
+        [InlineData(1, true)]
+        public void Plant_ValidName_ResultIndicatingAddition(int gardenSize, bool expectedResult)
         {
             // Arrage
-            var garden = new Garden(1);
+            var garden = new Garden(gardenSize);
 
             // Act
             var result = garden.Plant("A");
 
             // Assert
-            Assert.True(result, "Method should return true");
+            Assert.Equal(expectedResult, result);
         }
 
-        [Fact]
-        public void Plant_Overflow_False()
-        {
-            // Arrage
-            var garden = new Garden(0);
+        //[Fact]
+        ////public void Plant_PassValidName_RetursTrue()
+        //public void Plant_ValidName_True()
+        //{
+        //    // Arrage
+        //    var garden = new Garden(1);
 
-            // Act
-            var result = garden.Plant("A");
+        //    // Act
+        //    var result = garden.Plant("A");
 
-            // Assert
-            Assert.False(result, "Method should return false");
-        }
+        //    // Assert
+        //    Assert.True(result, "Method should return true");
+        //}
 
-        [Fact]
-        // public void Plant_PassEmptyName_ThrowsArgumentException()
-        public void Plant_EmptyName_ArgumentException()
+        //[Fact]
+        //public void Plant_Overflow_False()
+        //{
+        //    // Arrage
+        //    var garden = new Garden(0);
+
+        //    // Act
+        //    var result = garden.Plant("A");
+
+        //    // Assert
+        //    Assert.False(result, "Method should return false");
+        //}
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
+        public void Plant_InvalidName_ArgumentException(string name)
         {
             // Arrange
             var garden = new Garden(0);
 
             // Act & Assert
-            var exception = Assert.Throws<ArgumentException>(() => garden.Plant(""));
-            Assert.Equal("Name",exception.ParamName, ignoreCase: true);
-        }
-
-        [Fact]
-        public void Plant_Whitespace_ArgumentException()
-        {
-            // Arrange
-            var garden = new Garden(0);
-
-            // Act & Assert
-            var exception = Assert.Throws<ArgumentException>(() => garden.Plant(" "));
+            var exception = Assert.ThrowsAny<ArgumentException>(() => garden.Plant(name));
             Assert.Equal("Name", exception.ParamName, ignoreCase: true);
         }
 
-        [Fact]
+        [Theory(Skip = "replaced by Plant_InvalidName_ArgumentException")]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void Plant_InvalidName_ArgumentException2(string name)
+        {
+            // Arrange
+            var garden = new Garden(0);
+
+            // Act & Assert
+            var exception = Assert.Throws<ArgumentException>(() => garden.Plant(name));
+            Assert.Equal("Name", exception.ParamName, ignoreCase: true);
+        }
+
+        [Fact(Skip = "replaced by Plant_InvalidName_ArgumentException")]
         public void Plant_Null_ArgumentNullException()
         {
             // Arrange

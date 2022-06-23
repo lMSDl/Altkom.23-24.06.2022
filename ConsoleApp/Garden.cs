@@ -35,6 +35,24 @@ namespace ConsoleApp
             return true;
         }
 
+        public void Remove(string name)
+        {
+            if(!_items.Contains(name))
+                throw new ArgumentException("Nie ma takiej rośliny w ogrodzie!", nameof(name));
+
+            _items.Remove(name);
+        }
+
+        public void Clear()
+        {
+            _items.Clear();
+        }
+
+        public int Count()
+        {
+            return _items.Count();
+        }
+
         public ICollection<string> GetPlants()
         {
             return _items.ToList();

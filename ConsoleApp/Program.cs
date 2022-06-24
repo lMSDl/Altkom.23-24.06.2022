@@ -1,2 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+//internal partial class Program {
+
+//    static void Main(params string[] args)
+//    {
+        Console.WriteLine("Hello in Program!");
+
+
+
+        public partial class Program { }
+//    }
+
+//}

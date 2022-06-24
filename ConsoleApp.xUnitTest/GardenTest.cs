@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -158,6 +159,25 @@ namespace ConsoleApp.xUnitTest
             // Assert
             Assert.NotEqual(baseList, resultList);
         }
+
+
+        [Fact]
+        public void Plant_ValidName_ActionLogged()
+        {
+            // Arrage
+            var logger = new Mock<ILogger>();
+            logger.Setup(x => x.Log(It.IsAny<string>())).Verifiable();
+
+            var garden = new Garden(1, logger.Object);
+
+            //Act
+            garden.Plant("A");
+
+            //Assert
+            //logger.Verify(x => x.Log("Zasadzono w ogrodzie A"), Times.Once);
+            logger.Verify();
+        }
+
 
     }
 }

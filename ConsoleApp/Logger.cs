@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp
 {
-    public class Logger
+    public class Logger : ILogger
     {
         private Dictionary<DateTime, string> _logs = new Dictionary<DateTime, string>();
 
@@ -26,7 +26,7 @@ namespace ConsoleApp
                 .Select(x => $"{x.Key.ToShortDateString()} {x.Key.ToShortTimeString()}: {x.Value}"));
         }
 
-        public Task<string>GetLogsAsync(DateTime from, DateTime to)
+        public Task<string> GetLogsAsync(DateTime from, DateTime to)
         {
             return Task.Run(() => GetLogs(from, to));
         }
